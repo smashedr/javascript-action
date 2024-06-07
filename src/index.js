@@ -26,8 +26,13 @@ const semver = require('semver')
         let file = fs.readFileSync(inputFile)
         let data = JSON.parse(file.toString())
         setNestedValue(data, inputKey, version)
-        let result = JSON.stringify(data)
+        let result = JSON.stringify(data, null, 2)
         fs.writeFileSync(inputFile, result)
+
+        // Show Result
+        console.log('-'.repeat(40))
+        console.log(result)
+        console.log('-'.repeat(40))
     } catch (e) {
         core.debug(e)
         core.info(e.message)
