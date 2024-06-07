@@ -6,9 +6,9 @@ const semver = require('semver')
 ;(async () => {
     try {
         // Check Tag
-        if (!github.context.ref.startsWith('refs/tags/')) {
-            return core.info(`Skipping due to no tag: ${github.context.ref}`)
-        }
+        // if (!github.context.ref.startsWith('refs/tags/')) {
+        //     return core.info(`Skipping due to no tag: ${github.context.ref}`)
+        // }
         // console.log('ref:', github.context.ref)
         // const parsedTag = github.context.ref.replace('refs/tags/', '')
         // console.log('parsedTag:', parsedTag)
