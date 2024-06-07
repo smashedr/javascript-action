@@ -33623,10 +33623,10 @@ const semver = __nccwpck_require__(1383)
         // Process Inputs
         const inputFile = core.getInput('file')
         console.log('file:', inputFile)
-        const inputVersion = core.getInput('version')
-        console.log('inputVersion:', inputVersion)
         const inputKey = core.getInput('key')
         console.log('inputKey:', inputKey)
+        const inputVersion = core.getInput('version')
+        console.log('inputVersion:', inputVersion)
 
         // Parse Version
         const parsedTag = github.context.ref.replace('refs/tags/', '')
