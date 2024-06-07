@@ -33620,37 +33620,54 @@ const semver = __nccwpck_require__(1383)
 
 ;(async () => {
     try {
-        // Check Tag
-        // if (!github.context.ref.startsWith('refs/tags/')) {
-        //     return core.info(`Skipping due to no tag: ${github.context.ref}`)
-        // }
-        // console.log('ref:', github.context.ref)
-        // const parsedTag = github.context.ref.replace('refs/tags/', '')
-        // console.log('parsedTag:', parsedTag)
-        // const version = semver.clean(parsedTag)
-        // console.log('semver:', version)
-
         // Process Inputs
         const inputFile = core.getInput('file')
         console.log('file:', inputFile)
         const inputVersion = core.getInput('version')
-        console.log('version:', inputVersion)
-        console.log('version:', typeof inputVersion)
-        const version = semver.clean(inputVersion)
-        console.log('semver:', version)
+        console.log('inputVersion:', inputVersion)
+        const inputKey = core.getInput('key')
+        console.log('inputKey:', inputKey)
 
-        // // Set Variables
-        // const { owner, repo } = github.context.repo
-        // console.log('owner:', owner)
-        // console.log('repo:', repo)
-        // const sha = github.context.sha
-        // console.log('sha:', sha)
+        // Parse Version
+        const parsedTag = github.context.ref.replace('refs/tags/', '')
+        console.log('parsedTag:', parsedTag)
+        const version = semver.clean(inputVersion || parsedTag)
+        console.log('version:', version)
+        if (!version) {
+            return core.setFailed('No Input or Parsed Version.')
+        }
+
+        // Update JSON
+        let file = fs.readFileSync(inputFile)
+        let data = JSON.parse(file.toString())
+        setNestedValue(data, inputKey, version)
+        let result = JSON.stringify(data)
+        fs.writeFileSync(inputFile, result)
     } catch (e) {
         core.debug(e)
         core.info(e.message)
         core.setFailed(e.message)
     }
 })()
+
+/**
+ * @function setNestedValue
+ * @param {Object} obj
+ * @param {String} path
+ * @param {String} value
+ */
+function setNestedValue(obj, path, value) {
+    const keys = path.split('.')
+    let current = obj
+    for (let i = 0; i < keys.length - 1; i++) {
+        const key = keys[i]
+        if (!(key in current)) {
+            current[key] = {}
+        }
+        current = current[key]
+    }
+    current[keys[keys.length - 1]] = value
+}
 
 })();
 
