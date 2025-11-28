@@ -21,6 +21,9 @@
 
 # JavaScript Action Template
 
+<a title="JavaScript Action Template" href="https://actions.cssnr.com/" target="_blank">
+<img alt="JavaScript Action Template" align="right" width="128" height="auto" src="https://raw.githubusercontent.com/smashedr/javascript-action/refs/heads/master/.github/assets/logo.svg"></a>
+
 - [Features](#Features)
 - [Inputs](#Inputs)
   - [Permissions](#Permissions)
